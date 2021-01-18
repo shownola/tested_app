@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "posts/edit", type: :view do
+  current_user = User.first_or_create!(email: 'sherry@email.com', password: 'password', password_confirmation: 'password')
+
   before(:each) do
     @post = assign(:post, Post.create!(
       title: "MyString",
       body: "MyText",
-      user: nil,
+      user: current_user,
       views: 1
     ))
   end
@@ -19,9 +21,7 @@ RSpec.describe "posts/edit", type: :view do
 
       assert_select "textarea[name=?]", "post[body]"
 
-      assert_select "input[name=?]", "post[user_id]"
 
-      assert_select "input[name=?]", "post[views]"
     end
   end
 end
